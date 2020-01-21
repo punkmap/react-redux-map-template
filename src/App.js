@@ -4,6 +4,7 @@ import './App.css';
 
 import { connect } from 'react-redux';
 import { defaultFunction } from './actions';
+import ReactMap from './components/organisms/ReactMap';
 
 class App extends Component {
 
@@ -15,7 +16,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        React Redux Starter Template
+        {/* <ReactScene /> */}
+        <ReactMap />
       </div>
     );
   }
