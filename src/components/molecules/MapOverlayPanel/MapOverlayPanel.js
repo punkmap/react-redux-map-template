@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 //import { loadModules } from 'esri-loader'
 import MapSearch from '../MapSearch/MapSearch'
+import SidePanel from '../../molecules/SidePanel'
 import './MapOverlayPanel.css'
 import Grid from '@material-ui/core/Grid'
 class MapOverlayPanel extends Component {
   constructor(props){
     super(props)
     this.state = {
-      hideSidePanel: true
     }
   } 
   setProjectCallback = (value) =>{
@@ -37,7 +37,9 @@ class MapOverlayPanel extends Component {
             view={this.props.view} 
             resultPinDragable={true}
           />
-          
+          <SidePanel ref="sidePanel" 
+            hideSidePanel={this.props.hideSidePanel} 
+          />
         </Grid>
       </div>
     )

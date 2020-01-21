@@ -30,16 +30,16 @@ class MapSearch extends Component {
           //, popupEnabled: false
         })
         var sources = searchWidget.get('sources');
-        sources.push({
-            //Pass in the custom locator to the sources
-            locator: new Locator("https://maps.townofcary.org/arcgis1/rest/services/Locators/Cary_Com_Locator/GeocodeServer"),
-            singleLineFieldName: "SingleLine",
-            outFields: ["*"],
-            name: "ToC Locator",
-            autoNavigate: true,
-            maxSuggestions: 3,
-            placeholder: "example: 120 Wilkinson Ave"
-        })
+        // sources.push({
+        //     //Pass in the custom locator to the sources
+        //     locator: new Locator("https://maps.townofcary.org/arcgis1/rest/services/Locators/Cary_Com_Locator/GeocodeServer"),
+        //     singleLineFieldName: "SingleLine",
+        //     outFields: ["*"],
+        //     name: "ToC Locator",
+        //     autoNavigate: true,
+        //     maxSuggestions: 3,
+        //     placeholder: "example: 120 Wilkinson Ave"
+        // })
         searchWidget.set('sources', sources)
         console.log('self.props.resultPinDragable: ' + self.props.resultPinDragable)
         

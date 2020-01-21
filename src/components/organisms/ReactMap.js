@@ -92,7 +92,7 @@ class ReactMap extends React.PureComponent {
         <MapOverlayPanel 
           view={this.state.mapView} 
           resultPinDragable={true}
-          //hideSidePanel={false} 
+          hideSidePanel={false} 
           hideSidePanel_MapOverlay={this.state.hideSidePanel} 
         />
         
