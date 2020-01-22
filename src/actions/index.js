@@ -1,12 +1,21 @@
 import { FETCH_DATA } from '../actions/types';
-import { UPDATE_COORDINATES } from '../actions/types';
+import { UPDATE_MAPCLICK_COORDINATES, UPDATE_CENTERPOINT_COORDINATES } from '../actions/types';
 
 
-export const updateCoordinates = (coordData) => {
+export const updateMapclickCoordinates = (coordData) => {
     
     return dispatch => {
         dispatch({
-            type: UPDATE_COORDINATES,
+            type: UPDATE_MAPCLICK_COORDINATES,
+            payload: coordData,
+        });
+    };
+};
+export const updateCenterpointCoordinates = (coordData) => {
+    
+    return dispatch => {
+        dispatch({
+            type: UPDATE_CENTERPOINT_COORDINATES,
             payload: coordData,
         });
     };

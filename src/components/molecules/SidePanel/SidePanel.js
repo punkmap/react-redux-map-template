@@ -79,7 +79,7 @@ class SidePanel extends Component {
         
         const { classes } = this.props;
         this.state = {
-            coordinates: ''
+            clickCoordinates: ''
             , pointerEvents: 'auto'
             , sidePanelClasses: ['sidePanel', 'pointerEventsInactive']
             , textFieldClasses: [classes.textField, classes.pointerEventsInactive]
@@ -87,10 +87,19 @@ class SidePanel extends Component {
         
         this.sideNav = React.createRef();
         store.subscribe(() => {
+            const clickPoint = store.getState().map.clickCoordinates;
+            const coords = clickPoint.lat + ' ' + clickPoint.lon;
             this.setState({
-                coordinates: store.getState().map.coordinates
+                clickCoordinates: coords
             })
-        })
+        });
+        store.subscribe(() => {
+            const centerpoint = store.getState().map.centerpointCoordinates;
+            const coords = centerpoint.lat + ' ' + centerpoint.lon;
+            this.setState({
+                centerpointCoordinates: coords
+            })
+        });
     }
     update = (e) => {
         this.props.onUpdate(e.target.value);
@@ -140,7 +149,8 @@ class SidePanel extends Component {
                             <MenuItem onClick={this.handleClose('remove')}>Remove</MenuItem>
                         </Menu>
                         </AppBar>
-                        <h3>coords: {this.state.coordinates}</h3>
+                        <h3>centerpoint coords: {this.state.centerpointCoordinates}</h3>
+                        <h3>click coords: {this.state.clickCoordinates}</h3>
                     </Paper>
                 </Fade>
             </div>

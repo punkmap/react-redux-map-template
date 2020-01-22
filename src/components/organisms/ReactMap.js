@@ -10,7 +10,7 @@ import './ReactMap.css'
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateCoordinates } from '../../actions'
+import { updateMapclickCoordinates, updateCenterpointCoordinates } from '../../actions'
 
 
 class ReactMap extends React.PureComponent {
@@ -52,6 +52,9 @@ class ReactMap extends React.PureComponent {
     }).when((function(mapView){
         self.setState({mapView:mapView})
         mapView.on('click', self.mapClick)
+
+        mapView.watch('extent', self.mapCenter);
+
         mapView.popup.highlightEnabled = false;
         mapView.popup.actions = {}
         mapView.popup.watch('visible', function(e){
@@ -74,8 +77,20 @@ class ReactMap extends React.PureComponent {
   }
   mapClick = (e) => {
     //console.log('quit clicking me mapPoint: ' + JSON.stringify(e.mapPoint));
-      const coordString = e.mapPoint.latitude.toFixed(3).toString() + " " + e.mapPoint.longitude.toFixed(3).toString();
-      this.props.updateCoordinates(coordString);
+      const coords = { lat: e.mapPoint.latitude.toFixed(5).toString(), lon: e.mapPoint.longitude.toFixed(5).toString()};
+      this.props.updateMapclickCoordinates(coords);
+  }
+  mapCenter = (e) => {
+    //console.log('quit clicking me mapPoint: ' + JSON.stringify(e.mapPoint));
+    const coords = { lat: e.center.latitude, lon: e.center.longitude };
+    // setTimeout(function(){ 
+    //   console.log('setTimeOut: ', e);
+    //   //this.props.updateCenterpointCoordinates(coords);// .updateCenterpointCoordinates(coords);
+    // }, 500);  
+    console.log('mapCenter e: ', e);
+    this.props.updateCenterpointCoordinates(coords);// .updateCenterpointCoordinates(coords);
+    
+    // const coordString = e.mapPoint.latitude.toFixed(5).toString() + " " + e.mapPoint.longitude.toFixed(5).toString();
   }
   
   
@@ -106,7 +121,8 @@ class ReactMap extends React.PureComponent {
   }
 }
 ReactMap.propTypes = {
-  updateCoordinates: PropTypes.func.isRequired
+  updateMapclickCoordinates: PropTypes.func.isRequired,
+  updateCenterpointCoordinates: PropTypes.func.isRequired
 };
 
-export default connect(null, { updateCoordinates })(ReactMap);
+export default connect(null, { updateMapclickCoordinates, updateCenterpointCoordinates })(ReactMap);
