@@ -41,7 +41,6 @@ class MapSearch extends Component {
         //     placeholder: "example: 120 Wilkinson Ave"
         // })
         searchWidget.set('sources', sources)
-        console.log('self.props.resultPinDragable: ' + self.props.resultPinDragable)
         
         self.setState({searchWidget:searchWidget})  
         let resultGL = new GraphicsLayer()
@@ -57,14 +56,11 @@ class MapSearch extends Component {
         })
 
         if(self.props.resultPinDragable == true){
-            console.log('resultpindraggable')
             let draggingGraphic;
             let tempGraphic;
             view.on("drag", function(evt) {       
               // if this is the starting of the drag, do a hitTest
-              console.log('dragging');
               if (evt.action === 'start'){
-                console.log('dragstart');
                 view.hitTest(evt).then(resp => {
                   if (resp.results[0].graphic && resp.results[0].graphic.geometry.type === 'point'){
                     evt.stopPropagation();
@@ -74,7 +70,6 @@ class MapSearch extends Component {
                 });
               } else if (evt.action === 'update'){
                 // on drag update events, only continue if a draggingGraphic is set
-                console.log('dragUpdate');
                 if (draggingGraphic){
                   evt.stopPropagation();
                   // if there is a tempGraphic, remove it
@@ -92,7 +87,6 @@ class MapSearch extends Component {
                 
               } else if (evt.action === 'end'){
                 // on drag end, continue only if there is a draggingGraphic
-                console.log('dragEnd');
                 if (draggingGraphic){
                   evt.stopPropagation();
                   // rm temp

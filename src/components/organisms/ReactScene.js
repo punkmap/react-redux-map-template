@@ -14,8 +14,6 @@ class ReactScene extends React.PureComponent {
   }
   loadMap = ({loadedModules: [WebScene, SceneView], containerNode}) => {
 
-    //aef9f3b236e9492a97f0505376879fbb
-    console.log('esriMapLoader');
     new SceneView({
       container: containerNode
       , map: new WebScene({

@@ -7,6 +7,12 @@ import MapOverlayPanel from '../molecules/MapOverlayPanel/MapOverlayPanel'
 import PopUp from '../molecules/PopUp/PopUp'
 import './ReactMap.css'
 
+
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { updateCoordinates } from '../../actions'
+
+
 class ReactMap extends React.PureComponent {
   constructor(props){
     super(props)
@@ -34,7 +40,6 @@ class ReactMap extends React.PureComponent {
     }
   }
   loadMap = ({loadedModules: [Map, MapView, FeatureLayer, GraphicsLayer, watchUtils], containerNode}) => {
-    console.log('esriMapLoader');
     const self = this;
     
     let map = new Map({basemap: 'satellite'})
@@ -69,8 +74,8 @@ class ReactMap extends React.PureComponent {
   }
   mapClick = (e) => {
     //console.log('quit clicking me mapPoint: ' + JSON.stringify(e.mapPoint));
-      console.log('mapClick e: ', e);
-      
+      const coordString = e.mapPoint.latitude.toFixed(3).toString() + " " + e.mapPoint.longitude.toFixed(3).toString();
+      this.props.updateCoordinates(coordString);
   }
   
   
@@ -100,5 +105,8 @@ class ReactMap extends React.PureComponent {
     );
   }
 }
+ReactMap.propTypes = {
+  updateCoordinates: PropTypes.func.isRequired
+};
 
-export default ReactMap;
+export default connect(null, { updateCoordinates })(ReactMap);

@@ -21,7 +21,6 @@ class MapOverlayPanel extends Component {
     this.props.phaseCallback(value)
   }
   componentDidUpdate = () => {
-    console.log('MAPOVERLAYPANEL.componentDidUpdate this.state.hodeSidePanel: ' + this.state.hodeSidePanel)
   }
   render() {
     return (

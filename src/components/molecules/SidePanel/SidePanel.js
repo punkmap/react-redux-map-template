@@ -12,29 +12,15 @@ import IconButton from 'material-ui/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import DeleteIcon from '@material-ui/icons/DeleteForever';
-import NavigationIcon from '@material-ui/icons/DoneAll';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
-import Fab from '@material-ui/core/Fab';
 import AppBar from 'material-ui/AppBar';
 import Fade from '@material-ui/core/Fade';
-// import Button from '@material-ui/core/Button';
-// import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-// import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField'
-// import FormLabel from '@material-ui/core/FormLabel'
-// import Icon from '@material-ui/core/Icon';
 import './SidePanel.css';
 
+import store from '../../../store'
 
-
-
-function handleClick(event) {
-    console.log('shut the door')
-}
 function getPointerEvents(){
     return true
 }
@@ -93,15 +79,20 @@ class SidePanel extends Component {
         
         const { classes } = this.props;
         this.state = {
-            pointerEvents: 'auto'
+            coordinates: ''
+            , pointerEvents: 'auto'
             , sidePanelClasses: ['sidePanel', 'pointerEventsInactive']
             , textFieldClasses: [classes.textField, classes.pointerEventsInactive]
         };
         
         this.sideNav = React.createRef();
+        store.subscribe(() => {
+            this.setState({
+                coordinates: store.getState().map.coordinates
+            })
+        })
     }
     update = (e) => {
-        console.log(e.target.value);
         this.props.onUpdate(e.target.value);
         this.setState({fieldVal: e.target.value});
     };
@@ -115,34 +106,17 @@ class SidePanel extends Component {
         return true
     }
     componentDidMount = () => {
-        console.log('SIDENAV did mount');
         this.sideNav = React.createRef();
     }
     componentDidUpdate() {
-        console.log('this.props.hideSidePanel: ', this.props.hideSidePanel);
-        console.log('SIDEPANEL.componentDidUpdate')
-        console.log('this.props.hideSidePanel: ' + this.props.hideSidePanel);
         const { classes } = this.props;
-        //console.log('this.state.textFieldClasses: ' + JSON.stringify(this.state.textFieldClasses))
-        console.log('this.state.sidePanelClasses: ' + this.state.sidePanelClasses);
         if(!this.props.hideSidePanel && this.state.sidePanelClasses !== ['sidePanel', 'pointerEventsActive']){
-            //this.setState({sidePanelClasses : ['sidePanel', 'sidePanelInactive']})        
             this.state.sidePanelClasses.splice(-1, 1)
-            console.log('this.state.sidePanelClasses makeInactive: ' + this.state.sidePanelClasses);
             this.state.sidePanelClasses.push('pointerEventsActive')
-            console.log('this.state.sidePanelClasses makeInactive: ' + this.state.sidePanelClasses);
-            //this.state.textFieldClasses.splice(-1, 1)
-            //console.log('this.state.textFieldClasses.slice: ' + JSON.stringify(this.state.textFieldClasses))
-            //this.state.textFieldClasses.push(classes.pointerEventsActive)
         } 
         else if (this.props.hideSidePanel && this.state.sidePanelClasses !== ['sidePanel', 'pointerEventsInactive']) {
-            //this.setState({sidePanelClasses : ['sidePanel', 'sidePanelActive']})
             this.state.sidePanelClasses.splice(-1, 1)
-            console.log('this.state.sidePanelClasses makeActive: ' + this.state.sidePanelClasses);
             this.state.sidePanelClasses.push('pointerEventsInactive')
-            console.log('this.state.sidePanelClasses makeActive: ' + this.state.sidePanelClasses);
-            //this.state.textFieldClasses.splice(-1, 1)
-            //this.state.textFieldClasses.push(classes.pointerEventsInactive)
         }
     }
     render() {
@@ -166,11 +140,8 @@ class SidePanel extends Component {
                             <MenuItem onClick={this.handleClose('remove')}>Remove</MenuItem>
                         </Menu>
                         </AppBar>
-                                        
-                        
-                        
+                        <h3>coords: {this.state.coordinates}</h3>
                     </Paper>
-                    
                 </Fade>
             </div>
         </MuiThemeProvider>

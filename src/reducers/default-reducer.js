@@ -1,7 +1,7 @@
 // default reducer
 // Note: You can remove this reducer and create your own reducer
 
-import { FETCH_DATA } from '../actions';
+import { FETCH_DATA } from '../actions/types';
 
 export default (state = {}, action) => {
     switch(action.type) {
