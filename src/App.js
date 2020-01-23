@@ -3,21 +3,30 @@ import logo from './logo.svg';
 import './App.css';
 
 import { connect } from 'react-redux';
-import { defaultFunction } from './actions';
+import { defaultFunction, setConfig } from './actions';
 import ReactMap from './components/organisms/ReactMap';
 
-class App extends Component {
+import config from './App.config'
 
+
+class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      config: config
+    }
+  }
   componentDidMount() {
     // call default function to display redux operation
     this.props.defaultFunction();
+    this.props.setConfig(config);// .setConfig(config);
   }
-
   render() {
+    console.log('render config: ', config);
     return (
       <div>
         {/* <ReactScene /> */}
-        <ReactMap />
+        <ReactMap config={this.state.config}/>
       </div>
     );
   }
@@ -30,4 +39,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { defaultFunction })(App);
+export default connect(mapStateToProps, { defaultFunction, setConfig })(App);

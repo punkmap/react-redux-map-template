@@ -20,6 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import './SidePanel.css';
 
 import store from '../../../store'
+import watch from 'redux-watch';
 
 function getPointerEvents(){
     return true
@@ -79,27 +80,49 @@ class SidePanel extends Component {
         
         const { classes } = this.props;
         this.state = {
-            clickCoordinates: ''
-            , pointerEvents: 'auto'
-            , sidePanelClasses: ['sidePanel', 'pointerEventsInactive']
-            , textFieldClasses: [classes.textField, classes.pointerEventsInactive]
+            pointerEvents: 'auto',
+            sidePanelClasses: ['sidePanel', 'pointerEventsInactive'],
+            textFieldClasses: [classes.textField, classes.pointerEventsInactive],
         };
         
         this.sideNav = React.createRef();
-        store.subscribe(() => {
+        // store.subscribe(() => {
+        //     console.log(store.getState())
+        //     const clickPoint = store.getState().map.clickCoordinates;
+        //     const coords = clickPoint.lat + ' ' + clickPoint.lon;
+        //     console.log(clickPoint)
+        //     this.setState({
+        //         clickCoordinates: coords
+        //     })
+        // });
+        const clickPointWatch = watch(store.getState, 'map.clickCoordinates')
+        store.subscribe(clickPointWatch((newVal, oldVal, objectPath) => {
             const clickPoint = store.getState().map.clickCoordinates;
-            const coords = clickPoint.lat + ' ' + clickPoint.lon;
+            const coords = newVal.lat + ' ' + newVal.lon;
+            console.log(clickPoint)
             this.setState({
                 clickCoordinates: coords
             })
-        });
-        store.subscribe(() => {
+        }))
+        const centerPointWatch = watch(store.getState, 'map.centerpointCoordinates')
+        store.subscribe(centerPointWatch((newVal, oldVal, objectPath) => {
             const centerpoint = store.getState().map.centerpointCoordinates;
-            const coords = centerpoint.lat + ' ' + centerpoint.lon;
+            const coords = newVal.lat + ' ' + newVal.lon;
             this.setState({
-                centerpointCoordinates: coords
+                centerpointCoordinates: coords,
             })
-        });
+        }))
+
+
+        const titleWatch = watch(store.getState, 'config.config.title')
+        store.subscribe(titleWatch((newVal, oldVal, objectPath) => {
+            console.log('title new val and old val: ', newVal + ' ' + oldVal);
+            this.setState({
+                configTitle: newVal,
+            })
+        }))
+        this.configTest = store.getState().config.config.title;
+        console.log('this.configTest: ',  this.configTest);
     }
     update = (e) => {
         this.props.onUpdate(e.target.value);
@@ -149,6 +172,7 @@ class SidePanel extends Component {
                             <MenuItem onClick={this.handleClose('remove')}>Remove</MenuItem>
                         </Menu>
                         </AppBar>
+                        <h2>{this.state.configTitle}</h2>
                         <h3>centerpoint coords: {this.state.centerpointCoordinates}</h3>
                         <h3>click coords: {this.state.clickCoordinates}</h3>
                     </Paper>

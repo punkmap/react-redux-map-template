@@ -11,7 +11,7 @@ import { UPDATE_MAPCLICK_COORDINATES, UPDATE_CENTERPOINT_COORDINATES } from '../
 
 const initialState = {
     clickCoordinates: 'click map',
-    centerpointCoordinates: '',
+    centerpointCoordinates: 'pan map',
 }
 export default (state = initialState, action) => {
     switch(action.type) {
