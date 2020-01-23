@@ -46,7 +46,7 @@ class ReactMap extends React.PureComponent {
     
     let mv = new MapView({
       container: containerNode
-      , center: [-78.78004, 35.78961]
+      , center: [-78.90392, 35.99702]
       , zoom: 18
       , map: map
     }).when((function(mapView){
@@ -76,7 +76,7 @@ class ReactMap extends React.PureComponent {
     //self.state.mapView.popup.open();
   }
   mapClick = (e) => {
-    //console.log('quit clicking me mapPoint: ' + JSON.stringify(e.mapPoint));
+      console.log('quit clicking me mapPoint: ' + JSON.stringify(e.mapPoint));
       const coords = { lat: e.mapPoint.latitude.toFixed(5).toString(), lon: e.mapPoint.longitude.toFixed(5).toString()};
       this.props.updateMapclickCoordinates(coords);
   }
