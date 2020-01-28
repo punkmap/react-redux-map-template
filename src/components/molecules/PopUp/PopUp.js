@@ -70,11 +70,11 @@ class PopUp extends React.Component {
                         {JSON.stringify(popupData[type].data) != '{}' &&
                             <ul className={classes.ul}>
                                 <ListSubheader disableGutters disableSticky className={classes.subHeader}>{`${popupData[type].label}`}</ListSubheader>
-                                {Object.keys(popupData[type].data).map(item => (
+                                {/* {Object.keys(popupData[type].data).map(item => (
                                 <ListItem key={`item-${popupData[type].label}-${item}`}>
                                     <ListItemText primary={`${item} : ${popupData[type].data[item]}`} />
                                 </ListItem>
-                                ))}
+                                ))} */}
                             </ul>
                         }
                     </li>

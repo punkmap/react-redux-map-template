@@ -1,4 +1,4 @@
 const config = {
-    title: 'test title',
+    title: 'test',
 }
 export default config;
